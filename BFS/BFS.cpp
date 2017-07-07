@@ -1,5 +1,8 @@
+
+
 #include <iostream>
 #include <ctime>
+#include <queue>
 
 using namespace std;
 
@@ -12,12 +15,26 @@ public:
 };
 
 //REKURENCJA PRZESZUKIWANIE W GLAB
-void DFS(int w, bool *visited, int **matrix, int sizeMatrix)
+void BFS(int w, bool *visited, int **matrix, int sizeMatrix)
 {
+    queue < int > neighbors;
+    neighbors.push(w);
+
+    int mainW;
     visited[w] = true;
-    for(int i = 0; i < sizeMatrix; i++)
-        if((matrix[w][i] >= 1) && !visited[i])
-            DFS(i,visited,matrix,sizeMatrix);
+
+    while(!neighbors.empty())
+    {
+        mainW = neighbors.front();
+        neighbors.pop();
+
+        for(int i = 0; i < sizeMatrix; i++)
+            if((matrix[mainW][i]>= 1) && !visited[i])
+            {
+                visited[i] = true;
+                neighbors.push(i);
+            }
+    }
 }
 
 int main()
@@ -28,8 +45,9 @@ int main()
     // densityGraph = 2 Graf pelny w 100%
     // densityGraph = 1.5 Graf pelny w 75%
     // densityGraph = 1 Graf pelny w 50%
+
     double densityGraph=2;
-    int sizeMatrix=8;
+    int sizeMatrix=5;
 
     // KRAWEDZIE
     int sizeLinks=((sizeMatrix*(sizeMatrix-1))/2)*densityGraph;
@@ -81,6 +99,7 @@ int main()
                 matrix[s][f]=w;
                 stop--;
             }
+
         }
     }
 
@@ -93,9 +112,9 @@ int main()
         cout<<endl;
     }
 
-    // DFS
+    // BFS
     cout<<endl;
-    DFS(0,visited,matrix,sizeMatrix);
+    BFS(0,visited,matrix,sizeMatrix);
 
     // SPRAWDZ CZY GRAF JEST SPOJNY
     int counter=0;
@@ -108,9 +127,9 @@ int main()
     }
 
     if(counter==sizeMatrix)
-        cout<<"DFS -> Graf jest spojny"<<endl;
+        cout<<"BFS -> Graf jest spojny"<<endl;
     else
-        cout<<"DFS -> Graf nie jest spojny"<<endl;
+        cout<<"BFS -> Graf nie jest spojny"<<endl;
 
     // WYPISZ KRAWEDZIE GRAFU
     cout<<endl<<"Graf: "<<endl;
