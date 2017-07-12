@@ -32,7 +32,7 @@ int main()
 
     //IN
     double densityGraph=0.75;
-    int sizeMatrix=5;
+    int sizeMatrix=1000;
     int startVertex=0;
 
     //OUT
@@ -101,7 +101,14 @@ int main()
     }
 
     // DIJKSTRA
-    int costDijkstra[sizeMatrix][sizeMatrix];
+    int **costDijkstra=new int*[sizeMatrix];
+    for (int i = 0; i < sizeMatrix; i++)
+        costDijkstra[i] = new int [sizeMatrix];
+
+    for(int i=0; i<sizeMatrix; i++)
+        for(int j=0; j<sizeMatrix; j++)
+            costDijkstra[i][j]=0;
+
     int distance[sizeMatrix];
     int prev[sizeMatrix];
     int visited[sizeMatrix];

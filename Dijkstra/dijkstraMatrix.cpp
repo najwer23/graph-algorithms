@@ -101,7 +101,15 @@ int main()
     }
 
     // DIJKSTRA
-    int costDijkstra[sizeMatrix][sizeMatrix];
+
+    int **costDijkstra=new int*[sizeMatrix];
+    for (int i = 0; i < sizeMatrix; i++)
+        costDijkstra[i] = new int [sizeMatrix];
+
+    for(int i=0; i<sizeMatrix; i++)
+        for(int j=0; j<sizeMatrix; j++)
+            costDijkstra[i][j]=0;
+
     int distance[sizeMatrix];
     int prev[sizeMatrix];
     int visited[sizeMatrix];
@@ -109,6 +117,7 @@ int main()
     int midDistance;
     int nextVertex;
     int x;
+
 
     // INICJALIZACJA
     for(int i=0; i<sizeMatrix; i++)
@@ -182,6 +191,7 @@ int main()
         }
 
     delete [] matrix;
+    delete [] costDijkstra;
     return 0;
 }
 
